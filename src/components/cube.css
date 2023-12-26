@@ -1,0 +1,219 @@
+/* * {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  
+  body {
+    height: 100vh;
+    background-color: red;
+  }
+  
+  .container {
+    height: 60vh;
+    width: 30vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    perspective: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .box {
+    height: 250px;
+    width: 250px;
+    transform-style: preserve-3d;
+  }
+  
+  .card {
+    height: 250px;
+    width: 250px;
+    text-align: center;
+    padding: 100px 0;
+    color: white;
+    background-color:orange;
+    border: 2px solid white;
+    font-size: 32px;
+    box-sizing: border-box;
+    position: absolute;
+  }
+  
+  #front {
+    transform: translateZ(125px);
+  }
+  
+  #back {
+    transform: translateZ(-125px);
+  }
+  
+  #left {
+    right: 125px;
+    transform: rotateY(-90deg);
+  }
+  
+  #right {
+    left: 125px;
+    transform: rotateY(90deg);
+  }
+  
+  #top {
+    bottom: 125px;
+    transform: rotateX(90deg);
+  }
+  
+  #bottom {
+    top: 125px;
+    transform: rotateX(-90deg);
+  }
+
+  table, th, td {
+    border:1px solid black;
+  } */
+
+
+
+  
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  
+  body {
+    height: 100vh;
+    background-color: red;
+  }
+  
+  .container {
+    height: 30vh;
+    width: 70vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    perspective: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .box {
+    height: 350px; /* Updated size of the cube */
+    width: 350px; /* Updated size of the cube */
+    transform-style: preserve-3d;
+  }
+  
+  .card {
+    height: 350px; /* Updated size of each face */
+    width: 350px; /* Updated size of each face */
+    text-align: center;
+    padding: 20px;
+    color: white;
+    background-color: orange;
+    border: 2px solid white;
+    font-size: 16px;
+    box-sizing: border-box;
+    position: absolute;
+    overflow: hidden;
+  }
+  
+  /* Apply styles for each face of the cube */
+  #front,
+  #back,
+  #left,
+  #right,
+  #top,
+  #bottom {
+    overflow: auto; /* Add overflow property to enable scrollbar */
+  }
+  
+  /* Add custom scrollbar styles */
+  #front::-webkit-scrollbar,
+  #back::-webkit-scrollbar,
+  #left::-webkit-scrollbar,
+  #right::-webkit-scrollbar,
+  #top::-webkit-scrollbar,
+  #bottom::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  #front::-webkit-scrollbar-track,
+  #back::-webkit-scrollbar-track,
+  #left::-webkit-scrollbar-track,
+  #right::-webkit-scrollbar-track,
+  #top::-webkit-scrollbar-track,
+  #bottom::-webkit-scrollbar-track {
+    background-color: orange;
+  }
+  
+  #front::-webkit-scrollbar-thumb,
+  #back::-webkit-scrollbar-thumb,
+  #left::-webkit-scrollbar-thumb,
+  #right::-webkit-scrollbar-thumb,
+  #top::-webkit-scrollbar-thumb,
+  #bottom::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+  }
+  
+  #front::-webkit-scrollbar-thumb:hover,
+  #back::-webkit-scrollbar-thumb:hover,
+  #left::-webkit-scrollbar-thumb:hover,
+  #right::-webkit-scrollbar-thumb:hover,
+  #top::-webkit-scrollbar-thumb:hover,
+  #bottom::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+  
+  /* Apply specific transforms for each face */
+  #front {
+    transform: translateZ(175px); /* Half of the updated size */
+  }
+  
+  #back {
+    transform: translateZ(-175px); /* Half of the updated size */
+  }
+  
+  #left {
+    right: 175px; /* Half of the updated size */
+    transform: rotateY(-90deg);
+  }
+  
+  #right {
+    left: 175px; /* Half of the updated size */
+    transform: rotateY(90deg);
+  }
+  
+  #top {
+    bottom: 175px; /* Half of the updated size */
+    transform: rotateX(90deg);
+  }
+  
+  #bottom {
+    top: 175px; /* Half of the updated size */
+    transform: rotateX(-90deg);
+  }
+  
+  /* Apply styles for the table */
+  table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    table-layout: fixed; /* Ensure fixed layout for consistent column width */
+  }
+  
+  th,
+  td {
+    border: 1px solid black;
+    max-width: calc(100% / var(--columns)); /* Dynamic max-width based on columns */
+    max-height: calc(100% / var(--rows)); /* Dynamic max-height based on rows */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 8px;
+    text-align: center;
+  }
+  

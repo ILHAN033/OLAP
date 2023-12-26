@@ -1,0 +1,88 @@
+.olap_intro {
+    display: flex;
+    flex-direction: row;
+    background: radial-gradient(circle at 3% 25%, rgba(0, 40, 83, 1) 0%,
+                rgba(4, 12, 24, 1) 100%);
+}
+
+.olap_intro-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+
+    margin-right: 5rem;
+}
+
+.olap_intro-content h1 {
+    font-family: var(--font-family);
+    font-weight: 800;
+    font-size: 55px;
+    line-height: 75px;
+    letter-spacing: -0.04em;
+    color: #e100fc;
+}
+
+.olap_intro-content h2 {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 45px;
+    line-height: 60px;
+    letter-spacing: -0.04em;
+    color: #fff;
+    margin-top: 2rem;
+}
+
+.olap_intro-content p {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 28px;
+    color: var(--color-text);
+
+    margin-top: 1.5rem;
+}
+
+.olap_intro-content p {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 28px;
+    color: var(--color-text);
+
+    margin-top: 1.5rem;
+}
+
+.olap_intro-content p {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 28px;
+    color: var(--color-text);
+
+    margin-top: 1.5rem;
+}
+
+
+.olap_intro-content p {
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 28px;
+    color: var(--color-text);
+
+    margin-top: 1.5rem;
+}
+
+
+
+@media screen and (max-width: 1050px) {
+    .olap_intro {
+        flex-direction: column;
+    }
+
+    .gpt3__intro-content {
+        margin: 0 0 3rem;
+    }
+}

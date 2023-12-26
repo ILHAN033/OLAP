@@ -1,0 +1,73 @@
+.olap_navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 2rem 6rem;
+}
+
+.olap_navbar-links{
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.olap_navbar-links_logo{
+    margin-right: 2rem;
+}
+
+.olap_navbar-links_logo img  {
+    width: 200px;
+    height: 50px;
+}
+
+.olap_navbar-links_component{
+    display: flex;
+    flex-direction: row;
+}
+
+.olap_navbar-sign{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.olap_navbar-links_component p,
+.olap_navbar-sign p,
+.olap_navbar-menu_component p{
+    color: #fff;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    text-transform: capitalize;
+
+
+font-family: Manrope;
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 25px;
+
+
+color: #FFFFFF;
+
+ margin: 0 1rem;
+
+}
+
+.olap_navbar-sign button,
+.olap_navbar-menu_component button{
+    padding: 0.5rem 1rem;
+    color: #fff;
+    background: #FF4820;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    border-radius: 5px;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}

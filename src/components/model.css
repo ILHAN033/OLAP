@@ -1,0 +1,116 @@
+/* .app {
+  height: 100vh;
+  padding: 2.4rem;
+  overscroll-behavior-y: none;
+  display: flex;
+  position: relative;
+}
+.sidebar {
+  flex-basis: 56rem;
+  background-color: var(--color-dark--1);
+  padding: 3rem 5rem 3.5rem 5rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc(100vh - 4.8rem);
+}
+
+.footer {
+  margin-top: auto;
+}
+
+.copyright {
+  font-size: 1.2rem;
+  color: var(--color-light--1);
+}
+.mapContainer {
+  flex: 1;
+  height: 100%;
+  width: 50%;
+  background-color: var(--color-dark--2);
+  position: relative;
+}
+
+.map {
+  height: 100%;
+}
+ */
+
+
+
+ .app {
+  height: 100vh;
+  padding: 2.4rem;
+  overscroll-behavior-y: none;
+  display: flex;
+  position: relative;
+}
+
+.sidebar {
+  flex: 0 0 20%; /* Set the sidebar to take up a maximum of 30% of the available space */
+  background-color: var(--color-dark--1);
+  padding: 3rem 2rem 3.5rem 2rem; /* Adjust padding as needed */
+
+  display: flex;
+  flex-direction: column;
+  gap:5px;
+  /* align-items: center; */
+  color:white;
+  height: 100%; /* Adjust the height to take the full height of the screen */
+}
+
+.sidebar select{
+  color:black;
+}
+
+/* Style for Webkit browsers (Chrome, Safari) */
+.sidebar::-webkit-scrollbar {
+  width: 8px; /* Adjust the width as needed */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  background-image: linear-gradient(45deg, #ff8a00, #e52e71); /* Set gradient colors */
+  border-radius: 4px; /* Adjust the border-radius as needed */
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background-color: #e52e71; /* Change the color on hover */
+}
+
+/* Style for Firefox browsers */
+.sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent; /* Set the initial color to transparent */
+}
+
+.sidebar:hover {
+  scrollbar-color: #e52e71 transparent; /* Change the color on hover */
+}
+
+
+
+
+
+/* .footer {
+  margin-top: auto;
+}
+
+.copyright {
+  font-size: 1.2rem;
+  color: var(--color-light--1);
+} */
+
+.mapContainer {
+  flex: 1; /* Set the mapContainer to take up the remaining space */
+  height: 100%;
+  background-color: var(--color-dark--2);
+  position: relative;
+  overflow: hidden; /* Hide overflow to prevent scrollbar in the mapContainer */
+}
+
+.map {
+  height: 100%;
+}
+

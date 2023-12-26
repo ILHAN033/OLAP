@@ -1,0 +1,38 @@
+/* StarQueryModel.css */
+
+svg {
+    display: block;
+    margin: auto;
+}
+
+path {
+    cursor: pointer;
+    fill: steelblue;
+    transition: fill 0.3s ease;
+}
+
+path:hover {
+    fill: red;
+}
+
+line {
+    stroke: #ccc;
+    /* Line color */
+    stroke-width: 2;
+    stroke-opacity: 0.5;
+}
+
+text {
+    font-family: 'Arial', sans-serif;
+    font-size: 12px;
+    fill:"white";
+    text-anchor: middle;
+}
+
+label {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    fill:"white";
+    text-anchor: middle;
+}
