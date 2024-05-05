@@ -81,7 +81,8 @@
     padding: 0;
     font-family: sans-serif;
   }
-  
+
+
   body {
     height: 100vh;
     background-color: red;
@@ -111,13 +112,19 @@
     width: 350px; /* Updated size of each face */
     text-align: center;
     padding: 20px;
-    color: white;
-    background-color: orange;
-    border: 2px solid white;
-    font-size: 16px;
+    color: #000;
+    background-color: hsla(0,0%,94%);
+    border: 3px solid black;
+    font-size: 25px;
+    font-weight: bold;
     box-sizing: border-box;
     position: absolute;
     overflow: hidden;
+  }
+
+  table td{
+    font-size: 20px;
+    font-weight: bold;
   }
   
   /* Apply styles for each face of the cube */
@@ -146,7 +153,7 @@
   #right::-webkit-scrollbar-track,
   #top::-webkit-scrollbar-track,
   #bottom::-webkit-scrollbar-track {
-    background-color: orange;
+    background-color: transparent;
   }
   
   #front::-webkit-scrollbar-thumb,
@@ -215,5 +222,6 @@
     white-space: nowrap;
     padding: 8px;
     text-align: center;
+    color: black ;
   }
   

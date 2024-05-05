@@ -1,18 +1,17 @@
 import React, { useReducer, useState } from "react";
-import RollupForm from "./RollupForm";
 import Nav from "../Nav";
 import Cube from "./Cube";
 import "./model.css";
-import Drilldown from "./Drilldown";
 import StarNet from "./StarNet";
 
 const initialState = {
   status: null,
   isSlice: false,
+  isDice: false,
   front: false,
   frontData: [],
-  left: false,
-  leftData: [],
+  top: false,
+  topData: [],
   right: false,
   rightData: [],
 };
@@ -28,14 +27,15 @@ function reducer(state, action) {
     case "frontData":
       return { ...state, status: "loadfront", frontData: action.payload };
 
-    case "left":
+    case "top":
       return {
         ...state,
-        status: "loadleft",
-        left: action.payload,
+        status: "loadtop",
+        top: action.payload,
       };
-    case "leftData":
-      return { ...state, status: "loadleft", leftData: action.payload };
+    case "topData":
+      return { ...state, status: "loadtop", topData: action.payload };
+
     case "right":
       return {
         ...state,
@@ -47,6 +47,9 @@ function reducer(state, action) {
 
     case "slice":
       return { ...state, isSlice: action.payload };
+
+    case "dice":
+      return { ...state, isDice: action.payload };
 
     case "reset":
       return { initialState };
@@ -61,14 +64,27 @@ const Model = () => {
   const [measureColumn, setMeasureColumn] = useState("");
   const [dimensionTable, setDimensionTable] = useState("");
   const [dimensionColumn, setDimensionColumn] = useState("");
+  const [dimensionTable2, setDimensionTable2] = useState("");
+  const [dimension2Column, setDimension2Column] = useState("");
   const [tables, setTables] = useState([]);
   const [measureColumns, setMeasureColumns] = useState([]);
   const [dimensionColumns, setDimensionColumns] = useState([]);
+  const [dimension2Columns, setDimension2Columns] = useState([]);
   const [slicedData, setSlicedData] = useState([]);
   // const [isSlice, setIsSlice] = useState(false);
   const [sliceDimensionValue, setSliceDimensionValue] = useState("");
   const [
-    { front, left, right, frontData, leftData, rightData, status, isSlice },
+    {
+      front,
+      top,
+      right,
+      frontData,
+      topData,
+      rightData,
+      status,
+      isSlice,
+      isDice,
+    },
     dispatch,
   ] = useReducer(reducer, initialState);
 
@@ -76,70 +92,23 @@ const Model = () => {
     <>
       <Nav />
       <div className="app bg-radial-gradient ">
-        {/* <RollupForm
-          measureTable={measureTable}
-          measureColumn={measureColumn}
-          measureColumns={measureColumns}
-          dimensionTable={dimensionTable}
-          dimensionColumn={dimensionColumn}
-          dimensionColumns={dimensionColumns}
-          tables={tables}
-          setDimensionColumn={setDimensionColumn}
-          setDimensionColumns={setDimensionColumns}
-          setDimensionTable={setDimensionTable}
-          setMeasureColumn={setMeasureColumn}
-          setMeasureColumns={setMeasureColumns}
-          setMeasureTable={setMeasureTable}
-          setTables={setTables}
-          status={status}
-          setResult={setRolledUpData}
-          front={front}
-          left={left}
-          right={right}
-          frontData={frontData}
-          leftData={leftData}
-          rightData={rightData}
-          dispatch={dispatch}
-        />
-        <Drilldown
-          measureTable={measureTable}
-          measureColumn={measureColumn}
-          measureColumns={measureColumns}
-          dimensionTable={dimensionTable}
-          dimensionColumn={dimensionColumn}
-          dimensionColumns={dimensionColumns}
-          tables={tables}
-          setDimensionColumn={setDimensionColumn}
-          setDimensionColumns={setDimensionColumns}
-          setDimensionTable={setDimensionTable}
-          setMeasureColumn={setMeasureColumn}
-          setMeasureColumns={setMeasureColumns}
-          setMeasureTable={setMeasureTable}
-          setTables={setTables}
-          drilldownDimensionValue={drilldownDimensionValue}
-          setDrilldownDimensionValue={setDrilldownDimensionValue}
-          result={drilldownData}
-          setResult={setDrillDownData}
-          status={status}
-          front={front}
-          left={left}
-          right={right}
-          frontData={frontData}
-          leftData={leftData}
-          rightData={rightData}
-          dispatch={dispatch}
-        /> */}
         <StarNet
           measureTable={measureTable}
           measureColumn={measureColumn}
           measureColumns={measureColumns}
           dimensionTable={dimensionTable}
+          dimensionTable2={dimensionTable2}
           dimensionColumn={dimensionColumn}
           dimensionColumns={dimensionColumns}
+          dimension2Column={dimension2Column}
+          dimension2Columns={dimension2Columns}
           tables={tables}
           setDimensionColumn={setDimensionColumn}
           setDimensionColumns={setDimensionColumns}
+          setDimension2Column={setDimension2Column}
+          setDimension2Columns={setDimension2Columns}
           setDimensionTable={setDimensionTable}
+          setDimensionTable2={setDimensionTable2}
           setMeasureColumn={setMeasureColumn}
           setMeasureColumns={setMeasureColumns}
           setMeasureTable={setMeasureTable}
@@ -153,12 +122,13 @@ const Model = () => {
           result={rolledUpData}
           setResult={setRolledUpData}
           isSlice={isSlice}
+          isDice={isDice}
           status={status}
           front={front}
-          left={left}
+          top={top}
           right={right}
           frontData={frontData}
-          leftData={leftData}
+          topData={topData}
           rightData={rightData}
           dispatch={dispatch}
         />
@@ -167,13 +137,15 @@ const Model = () => {
           setRolledUpData={setRolledUpData}
           setDrillDownData={setDrillDownData}
           setSlicedData={setSlicedData}
+          dimensionTable={dimensionTable}
           isSlice={isSlice}
+          isDice={isDice}
           front={front}
-          left={left}
+          top={top}
           right={right}
           dispatch={dispatch}
           frontData={frontData}
-          leftData={leftData}
+          topData={topData}
           rightData={rightData}
         />
       </div>

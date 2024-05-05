@@ -27,8 +27,8 @@ const Nav = ({ name, isLogin }) => {
       <div className="olap_navbar-sign">
         <NavLink to="/login">
           {isLogin ? (
-            <div className="h-16 w-16 rounded-full bg-gradient-to-r from-blue-700 via-blue-800 to-blue-900 mr-4 flex justify-center items-center text-white">
-              {name.charAt(0)}
+            <div className=" h-20 px-1 rounded-full bg-gradient-to-r from-blue-700 via-blue-800 to-blue-900 mr-4 flex justify-center items-center text-white">
+              {name}
             </div>
           ) : (
             <p>Login in</p>

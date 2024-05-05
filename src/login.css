@@ -23,20 +23,29 @@
 }
 
 
+form{
+    display: flex;
+    gap: 10px;
+}
+
 
 label {
     display: block;
     margin-bottom: 8px;
 }
 
-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 16px;
+h2{
+    text-align: center;
 }
 
+/* input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 6px;
+} */
+
 button {
-    background-color:var(--color-text);
+    background-color:#0E46A3;
     font-family: var(--font-family);
     color: white;
     padding: 10px;
@@ -53,4 +62,17 @@ button:hover {
     color: #fff;
     cursor: pointer;
     margin: 0.5rem;
+}
+
+#username,#password{
+    padding: 6px;
+}
+
+#login-btn{
+    background-color: #0C359E;
+    width: 50%;
+    padding: 10px;
+    margin: 10px auto;
+    color: white;
+    font-weight: bold;
 }

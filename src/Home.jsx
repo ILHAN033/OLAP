@@ -1,6 +1,5 @@
 import Header from "./Header";
 import Nav from "./Nav";
-import Intro from "./intro";
 import "./home.css";
 import Footer from "./Footer";
 
@@ -11,7 +10,7 @@ function Home() {
         <Nav />
         <Header />
       </div>
-      <Intro />
+      {/* <Intro /> */}
       <Footer />
     </div>
   );

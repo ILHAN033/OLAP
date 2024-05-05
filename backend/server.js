@@ -12,7 +12,7 @@ const config = {
   user: "ILHAN",
   password: "12345678",
   server: "DESKTOP-QUE9RU4",
-  database: "SalesDB",
+  database: "SalesDB1",
   options: {
     trustedconnection: true,
     enableArithAbort: true,
@@ -139,8 +139,178 @@ app.post("/slice", async (req, res) => {
   }
 });
 
+// const testData = [
+//   {
+//     ProductID: 1,
+//     CategoryID: 1,
+//     Brand: "BrandX",
+//     Price: 1200.0,
+//     StockQuantity: 50,
+//   },
+//   {
+//     ProductID: 2,
+//     CategoryID: 1,
+//     Brand: "BrandY",
+//     Price: 800.0,
+//     StockQuantity: 100,
+//   },
+// ];
+
+// Dice operation endpoint
+// Dice operation endpoint
+// app.post("/dice", async (req, res) => {
+//   try {
+//     const { dimension1, value1, dimension2, value2 } = req.body;
+
+//     // Fetch data from the database
+//     const data = [await fetchDataFromDB()];
+
+//     // Filter the fetched data based on the provided dimensions and values
+//     const filteredData = data.filter((entry) => {
+//       return entry[dimension1] === value1 && entry[dimension2] === value2;
+//     });
+
+//     // Calculate the total measure for the filtered data
+//     const totalMeasure = filteredData.reduce((total, entry) => {
+//       return total + entry.measure;
+//     }, 0);
+
+//     // Send the total measure as the response
+//     res.json({ totalMeasure });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+const fs = require("fs"); // Import the file system module to read JSON file
+
+app.post("/dice", async (req, res) => {
+  try {
+    const {
+      dimensionTable,
+      dimensionTable2,
+      dimensionColumn,
+      dimension2Column,
+      value1,
+      value2,
+    } = req.body;
+    console.log(
+      dimensionTable,
+      dimensionColumn,
+      dimensionTable2,
+      dimension2Column,
+      value1,
+      value2
+    );
+    // Read data from Data.json
+    const jsonData = JSON.parse(fs.readFileSync("Data.json", "utf8"));
+
+    // Get the data array from JSON based on the dimension table
+    const data = jsonData[dimensionTable];
+    const data2 = jsonData[dimensionTable2];
+
+    // console.log(data);
+
+    // Find the object where the specified column matches the given value
+    // const result = data.find((obj) => obj[dimensionColumn] === value1);
+    const result = data.map((obj, index) => {
+      if (Number(value1) - 1 === index) {
+        if (
+          dimensionTable === "Product" ||
+          dimensionTable === "Customer" ||
+          dimensionTable === "Category"
+        ) {
+          return [obj[dimensionColumn], obj[`${dimensionTable}Name`]];
+        } else if (dimensionTable === "Time") {
+          return [obj[dimensionColumn], obj[`Date`]];
+        } else {
+          return [obj[dimensionColumn], obj["Amount"]];
+        }
+      }
+    });
+
+    const result2 = data2.map((obj, index) => {
+      if (Number(value2) - 1 === index) {
+        if (
+          dimensionTable2 === "Product" ||
+          dimensionTable2 === "Customer" ||
+          dimensionTable2 === "Category"
+        ) {
+          return [obj[dimension2Column], obj[`${dimensionTable2}Name`]];
+        } else if (dimensionTable2 === "Time") {
+          return [obj[dimension2Column], obj[`Date`]];
+        } else {
+          return [obj[dimension2Column], obj["Amount"]];
+        }
+      }
+    });
+
+    console.log(result, result2);
+
+    const finalResult = [...result, ...result2];
+    console.log(finalResult);
+
+    if (finalResult) {
+      res.json(finalResult);
+    } else {
+      res.status(404).json({ error: "Data not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+async function fetchDataFromDB() {
+  try {
+    // Connect to the database
+    await sql.connect(config);
+
+    // Fetch data from tables
+    const productData = await sql.query`SELECT * FROM Product`;
+    const categoryData = await sql.query`SELECT * FROM Category`;
+    const customerData = await sql.query`SELECT * FROM Customer`;
+    const timeData = await sql.query`SELECT * FROM Time`;
+    const salesData = await sql.query`SELECT * FROM Sales`;
+
+    // Construct JSON object with fetched data
+    const jsonData = {
+      Product: productData.recordset,
+      Category: categoryData.recordset,
+      Customer: customerData.recordset,
+      Time: timeData.recordset,
+      Sales: salesData.recordset,
+    };
+
+    return jsonData;
+  } catch (error) {
+    // Handle errors
+    console.error("Error fetching data:", error);
+    throw error;
+  } finally {
+    // Close the connection
+    await sql.close();
+  }
+}
+
+// Route to fetch and return data
+app.get("/getData", async (req, res) => {
+  try {
+    // Fetch data from the database
+    const data = [await fetchDataFromDB()];
+    // console.log(data);
+    res.json(data);
+  } catch (error) {
+    // Handle errors
+    console.error("Error handling request:", error);
+    res.status(500).json({ error: "Failed to fetch data from database" });
+  }
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
 /////////////////////////ROUGH?????????????????????????????????????????????

@@ -1,0 +1,23 @@
+{
+    "Product": [
+      { "ProductID": 1, "ProductName": "Laptop", "CategoryID": 1, "Brand": "BrandX", "Price": 1200.00, "StockQuantity": 50 },
+      { "ProductID": 2, "ProductName": "Smartphone", "CategoryID": 1, "Brand": "BrandY", "Price": 800.00, "StockQuantity": 100 }
+    ],
+    "Category": [
+      { "CategoryID": 1, "CategoryName": "Electronics", "Description": "Electronic devices and gadgets" },
+      { "CategoryID": 2, "CategoryName": "Clothing", "Description": "Fashion and apparel" }
+    ],
+    "Customer": [
+      { "CustomerID": 1, "CustomerName": "John Doe", "Email": "john.doe@email.com", "Address": "123 Main St, City" },
+      { "CustomerID": 2, "CustomerName": "Jane Smith", "Email": "jane.smith@email.com", "Address": "456 Oak Ave, Town" }
+    ],
+    "Time": [
+      { "TimeID": 1, "Date": "2023-01-01", "Year": 2023, "Quarter": 1, "Month": 1, "DayOfWeek": "Monday" },
+      { "TimeID": 2, "Date": "2023-02-15", "Year": 2023, "Quarter": 1, "Month": 2, "DayOfWeek": "Wednesday" }
+    ],
+    "Sales": [
+      { "SaleID": 1, "ProductID": 1, "CustomerID": 1, "TimeID": 1, "Quantity": 5, "Amount": 600.00, "Discount": 0.05, "Tax": 0.1 },
+      { "SaleID": 2, "ProductID": 2, "CustomerID": 2, "TimeID": 2, "Quantity": 8, "Amount": 620.00, "Discount": 0.02, "Tax": 0.08 }
+    ]
+  }
+  

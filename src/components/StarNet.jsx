@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./model.css";
 function StarNet({
@@ -8,15 +8,22 @@ function StarNet({
   dimensionTable,
   dimensionColumn,
   dimensionColumns,
+  dimensionTable2,
+  dimension2Column,
+  dimension2Columns,
   tables,
   setDimensionColumn,
   setDimensionColumns,
   setDimensionTable,
+  setDimension2Column,
+  setDimension2Columns,
+  setDimensionTable2,
   setMeasureColumn,
   setMeasureColumns,
   setMeasureTable,
   setTables,
   isSlice,
+  isDice,
   status,
   setResult,
   setSlicedData,
@@ -26,10 +33,14 @@ function StarNet({
   drilldownDimensionValue,
   setDrilldownDimensionValue,
   front,
-  left,
+  top,
   right,
   dispatch,
 }) {
+  const [value1, setValue1] = useState("");
+  const [value2, setValue2] = useState("");
+  const [diceData, setDiceData] = useState([]);
+
   useEffect(() => {
     // Fetch table names when the component mounts
     axios
@@ -58,6 +69,12 @@ function StarNet({
     fetchColumns(table, setDimensionColumns);
   };
 
+  const handleDimensionTable2Change = (table) => {
+    setDimensionTable2(table);
+    setDimension2Columns([]);
+    fetchColumns(table, setDimension2Columns);
+  };
+
   const handleRollup = async () => {
     try {
       const response = await axios.post("http://localhost:8000/rollup", {
@@ -74,8 +91,8 @@ function StarNet({
         // dispatch({ type: "front", payload: !front });
       }
 
-      if (status === "loadleft") {
-        left && dispatch({ type: "leftData", payload: response.data });
+      if (status === "loadtop") {
+        top && dispatch({ type: "topData", payload: response.data });
       }
       if (status === "loadright") {
         right && dispatch({ type: "rightData", payload: response.data });
@@ -108,8 +125,8 @@ function StarNet({
         // dispatch({ type: "front", payload: !front });
       }
 
-      if (status === "loadleft") {
-        left && dispatch({ type: "leftData", payload: response.data });
+      if (status === "loadtop") {
+        top && dispatch({ type: "topData", payload: response.data });
       }
       if (status === "loadright") {
         right && dispatch({ type: "rightData", payload: response.data });
@@ -134,6 +151,25 @@ function StarNet({
     }
   };
 
+  const handleDice = async () => {
+    try {
+      const response = await axios.post("http://localhost:8000/Dice", {
+        dimensionTable,
+        dimensionTable2,
+        dimensionColumn,
+        dimension2Column,
+        value1,
+        value2,
+      });
+
+      setDiceData(response.data);
+      console.log(response.data);
+      dispatch({ type: "frontData", payload: response.data });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     if (dimensionTable) {
       fetchColumns(dimensionTable, setDimensionColumns);
@@ -142,7 +178,6 @@ function StarNet({
   return (
     <div className="sidebar overflow-auto">
       <h1 className="text-2xl font-bold mb-4">OLAP Operations</h1>
-
       <div>
         <label className="block text-lg font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mt-2">
           Measure Table
@@ -180,7 +215,6 @@ function StarNet({
           </div>
         )}
       </div>
-
       <div>
         <label className="block text-lg font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mt-2">
           Dimension Table
@@ -219,6 +253,64 @@ function StarNet({
         )}
       </div>
 
+      {/* Dimension 2 */}
+      {isDice ? (
+        <div>
+          <label className="block text-lg font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mt-2">
+            Dimension Table 2
+          </label>
+          <select
+            value={dimensionTable2}
+            className="w-full px-4 py-2 mt-1 mb-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+            onChange={(e) => handleDimensionTable2Change(e.target.value)}
+          >
+            <option value="">Select Table</option>
+            {tables.map((table) => (
+              <option key={table} value={table}>
+                {table}
+              </option>
+            ))}
+          </select>
+
+          {dimensionTable2 && (
+            <div>
+              <label className="block text-lg font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mt-2">
+                Dimension Column
+              </label>
+              <select
+                value={dimension2Column}
+                className="w-full px-4 py-2 mt-1 mb-3 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                onChange={(e) => setDimension2Column(e.target.value)}
+              >
+                <option value="">Select Column</option>
+                {dimension2Columns.map((column) => (
+                  <option key={column} value={column}>
+                    {column}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          <label className="block text-lg font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mt-2">
+            Dice Dimension 1 Value
+          </label>
+          <input
+            type="text"
+            className="text-black"
+            value={value1}
+            onChange={(e) => setValue1(e.target.value)}
+          />
+          <label className="block text-lg font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mt-2">
+            Dice Dimension 2 Value
+          </label>
+          <input
+            type="text"
+            className="text-black"
+            value={value2}
+            onChange={(e) => setValue2(e.target.value)}
+          />
+        </div>
+      ) : null}
       <label className="block text-lg font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mt-2">
         Drilldown Dimension Value
       </label>
@@ -230,7 +322,7 @@ function StarNet({
       />
       {dimensionTable && (
         <div>
-          <label className="block text-lg font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mt-2">
+          <label className="block text-lg font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mt-2 ">
             Slice Dimension Value
           </label>
           <input
@@ -241,17 +333,15 @@ function StarNet({
           />
         </div>
       )}
-
       <button
         onClick={handleSlice}
-        className="bg-orange-500 mt-5"
+        className="bg-orange-500 mt-5 "
         disabled={!dimensionTable || !dimensionColumn || !sliceDimensionValue}
       >
         Perform Slice
       </button>
-
       <button
-        className="bg-orange-500 mt-5"
+        className="bg-orange-500 mt-5 "
         onClick={handleRollup}
         disabled={
           !measureTable || !measureColumn || !dimensionTable || !dimensionColumn
@@ -259,10 +349,9 @@ function StarNet({
       >
         Perform Rollup
       </button>
-
       <button
         onClick={handleDrilldown}
-        className="bg-orange-500 mt-5"
+        className="bg-orange-500 mt-5 "
         disabled={
           !measureTable ||
           !measureColumn ||
@@ -273,72 +362,115 @@ function StarNet({
       >
         Perform Drilldown
       </button>
+      <button
+        onClick={handleDice}
+        className="bg-orange-500 mt-5 "
+        disabled={
+          !measureTable ||
+          !measureColumn ||
+          !dimensionTable ||
+          !dimensionColumn ||
+          !dimensionTable2 ||
+          !value1 ||
+          !value2
+        }
+      >
+        Perform Dice
+      </button>
 
       <div className="flex flex-col gap-5  mt-3">
-        {!isSlice ? (
-          <>
-            <div className="flex justify-between">
-              <label className="ml-2 text-white bg-gradient-to-r from-orange-400 to-orange-600 py-1 px-2  rounded-md">
-                Front
-              </label>
-              <input
-                type="checkbox"
-                disabled={front}
-                checked={front}
-                className=" h-5 w-5"
-                value={front}
-                onChange={() => {
-                  dispatch({ type: "front", payload: !front });
-                }}
-              />
-            </div>
-            <div className="flex justify-between">
-              <label className="ml-2 text-white bg-gradient-to-r from-orange-400 to-orange-600 py-1 px-2 rounded-md">
-                Left
-              </label>
-              <input
-                type="checkbox"
-                className=" h-5 w-5"
-                checked={left}
-                disabled={left}
-                value={left}
-                onChange={() => {
-                  dispatch({ type: "left", payload: !left });
-                }}
-              />
-            </div>
-            <div className="flex justify-between">
-              <label className="ml-2 text-white bg-gradient-to-r from-orange-400 to-orange-600 py-1 px-2 rounded-md">
-                Right
-              </label>
-              <input
-                type="checkbox"
-                className=" h-5 w-5"
-                checked={right}
-                disabled={right}
-                value={right}
-                onChange={() => {
-                  dispatch({ type: "right", payload: !right });
-                }}
-              />
-            </div>
-          </>
+        {!isDice ? (
+          !isSlice ? (
+            <>
+              <div className="flex justify-between">
+                <label className="ml-2 text-white bg-gradient-to-r from-orange-400 to-orange-600 py-1 px-2  rounded-md">
+                  Front
+                </label>
+                <input
+                  type="checkbox"
+                  disabled={front}
+                  checked={front}
+                  className=" h-5 w-5"
+                  value={front}
+                  onChange={() => {
+                    dispatch({ type: "front", payload: !front });
+                  }}
+                />
+              </div>
+
+              <div className="flex justify-between">
+                <label className="ml-2 text-white bg-gradient-to-r from-orange-400 to-orange-600 py-1 px-2 rounded-md">
+                  Top
+                </label>
+                <input
+                  type="checkbox"
+                  className=" h-5 w-5"
+                  checked={top}
+                  disabled={top}
+                  value={top}
+                  onChange={() => {
+                    dispatch({ type: "top", payload: !top });
+                  }}
+                />
+              </div>
+              <div className="flex justify-between">
+                <label className="ml-2 text-white bg-gradient-to-r from-orange-400 to-orange-600 py-1 px-2 rounded-md">
+                  Right
+                </label>
+                <input
+                  type="checkbox"
+                  className=" h-5 w-5"
+                  checked={right}
+                  disabled={right}
+                  value={right}
+                  onChange={() => {
+                    dispatch({ type: "right", payload: !right });
+                  }}
+                />
+              </div>
+            </>
+          ) : null
         ) : null}
-        <div className="flex justify-between">
-          <label className="ml-2 text-white bg-gradient-to-r from-orange-400 to-orange-600 py-1 px-2 rounded-md">
-            Slice
-          </label>
-          <input
-            type="checkbox"
-            className=" h-5 w-5"
-            disabled={isSlice}
-            value={isSlice}
-            onChange={() => {
-              dispatch({ type: "slice", payload: !isSlice });
-            }}
-          />
-        </div>
-        <button onClick={() => dispatch({ type: "reset" })}>Reset</button>
+        {!isDice ? (
+          <div className="flex justify-between">
+            <label className="ml-2 text-white bg-gradient-to-r from-orange-400 to-orange-600 py-1 px-2 rounded-md">
+              Slice
+            </label>
+            <input
+              type="checkbox"
+              className=" h-5 w-5"
+              disabled={isSlice}
+              value={isSlice}
+              checked={isSlice}
+              onChange={() => {
+                dispatch({ type: "slice", payload: !isSlice });
+              }}
+            />
+          </div>
+        ) : null}
+        {!isSlice ? (
+          <div className="flex justify-between">
+            <label className="ml-2 text-white bg-gradient-to-r from-orange-400 to-orange-600 py-1 px-2 rounded-md">
+              Dice
+            </label>
+            <input
+              type="checkbox"
+              className=" h-5 w-5"
+              disabled={isDice}
+              value={isDice}
+              checked={isDice}
+              onChange={() => {
+                dispatch({ type: "dice", payload: !isDice });
+              }}
+            />
+          </div>
+        ) : null}
+        <button
+          className=" hover:bg-gradient-to-r from-orange-400 to-orange-600"
+          onClick={() => dispatch({ type: "reset" })}
+        >
+          Reset
+        </button>
       </div>
     </div>
   );
