@@ -58,6 +58,7 @@ app.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
+    let valid = user ? true : false;
     if (!user) {
       return res.status(401).json({ error: "Invalid username or password" });
     }
@@ -66,7 +67,7 @@ app.post("/login", async (req, res) => {
     }
     res
       .status(200)
-      .json({ message: "Login Successful", username: user.username });
+      .json({ message: "Login Successful", username: user.username, valid });
   } catch (error) {
     res.status(500).json({ message: "Login Failed" });
   }

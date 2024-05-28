@@ -572,12 +572,94 @@ import axios from "axios";
 import "./cube.css";
 import "./model.css";
 
+// function generateTable(data) {
+//   console.log("generate table function", data);
+
+//   if (!data || data.length === 0) {
+//     return null; // Handle empty data case
+//   }
+//   if (!Array.isArray(data)) {
+//     data = [data];
+//   }
+//   console.log("generate table function", data);
+
+//   const cols = Object.keys(data[0]).length;
+//   const rows = data.length;
+
+//   const table = [];
+//   for (let i = 0; i < rows; i++) {
+//     const row = [];
+//     for (let j = 0; j < cols; j++) {
+//       // Assuming each object property is unique, you can get the property name dynamically
+//       const propertyName = Object.keys(data[i])[j];
+//       row.push(
+//         <td key={propertyName} style={{ fontSize: cols > 2 ? "10px" : "25px" }}>
+//           {data[i][propertyName]}
+//         </td>
+//       );
+//     }
+//     table.push(<tr key={i}>{row}</tr>);
+//   }
+//   return table;
+// }
+
 function generateTable(data) {
   console.log("generate table function", data);
-  data = data.flat().filter((val) => {
-    return val !== null;
-  });
-  console.log("generate table function after", data);
+
+  if (!data || data.length === 0) {
+    return null; // Handle empty data case
+  }
+  if (!Array.isArray(data)) {
+    data = [data];
+  }
+  console.log("generate table function", data);
+
+  const cols = Object.keys(data[0]).length;
+  const rows = data.length;
+
+  const table = [];
+
+  // Create the column headings
+  const headings = Object.keys(data[0]).map((key) => (
+    <th
+      key={key}
+      style={{
+        fontSize: cols > 2 ? "10px" : "20px",
+        whiteSpace: "pre-wrap",
+        wordWrap: "break-word",
+      }}
+    >
+      {key}
+    </th>
+  ));
+  table.push(<tr key="headings">{headings}</tr>);
+
+  // Create the table rows and cells
+  for (let i = 0; i < rows; i++) {
+    const row = [];
+    for (let j = 0; j < cols; j++) {
+      const propertyName = Object.keys(data[i])[j];
+      row.push(
+        <td key={propertyName} style={{ fontSize: cols > 2 ? "10px" : "20px" }}>
+          {data[i][propertyName]}
+        </td>
+      );
+    }
+    table.push(<tr key={i}>{row}</tr>);
+  }
+  return table;
+}
+
+function generateTable2(data) {
+  console.log("generate table 2 function", data);
+
+  data = Array.isArray(data[0])
+    ? data.flat().filter((val) => {
+        return val !== null;
+      })
+    : data;
+  console.log("generate table 2 function after", data);
+
   if (!data || data.length === 0) {
     return null; // Handle empty data case
   }
@@ -591,13 +673,29 @@ function generateTable(data) {
   console.log(cols, rows);
 
   const table = [];
+  const headings = Object.keys(data[0]).map((key) => (
+    <th
+      key={key}
+      style={{
+        fontSize: cols > 2 ? "10px" : "20px",
+        whiteSpace: "pre-wrap",
+        wordWrap: "break-word",
+      }}
+    >
+      {key}
+    </th>
+  ));
+  table.push(<tr key="headings">{headings}</tr>);
   for (let i = 0; i < rows; i++) {
     const row = [];
     for (let j = 0; j < cols; j++) {
       // Assuming each object property is unique, you can get the property name dynamically
       const propertyName = Object.keys(data[i])[j];
       row.push(
-        <td key={Array.isArray(data) ? j + 1 : propertyName}>
+        <td
+          key={Array.isArray(data) ? j + 1 : propertyName}
+          style={{ fontSize: cols > 2 ? "10px" : "20px" }}
+        >
           {Array.isArray(data) ? data[j] : data[i][propertyName]}
         </td>
       );
@@ -698,7 +796,9 @@ function Cube({
             >
               Front
               <table>
-                <tbody>{generateTable(frontData)}</tbody>
+                <tbody>
+                  {isDice ? generateTable(frontData) : generateTable(frontData)}
+                </tbody>
               </table>
             </div>
           ) : (

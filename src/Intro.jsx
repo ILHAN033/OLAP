@@ -1,12 +1,9 @@
 import React from "react";
-
 import "./intro.css";
-import Nav from "./Nav";
 
 const Intro = () => {
   return (
     <>
-      <Nav />
       <div className="olap_intro section_padding id=About">
         <div className="olap_intro-content">
           <h1>About Us</h1>

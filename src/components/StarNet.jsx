@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./model.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function StarNet({
   measureTable,
   measureColumn,
@@ -106,7 +109,20 @@ function StarNet({
     }
   };
   const handleDrilldownDimensionChange = (value) => {
-    setDrilldownDimensionValue(value);
+    if (value > 0) {
+      setDrilldownDimensionValue(value);
+    } else {
+      toast.error("Please enter a positive value.");
+    }
+  };
+
+  const handleDiceDimensionValue = (value, setValue) => {
+    if (value && value > 0) {
+      setValue(value);
+      console.log(value);
+    } else {
+      toast.error("Please enter a positive value.");
+    }
   };
 
   const handleDrilldown = async () => {
@@ -298,7 +314,9 @@ function StarNet({
             type="text"
             className="text-black"
             value={value1}
-            onChange={(e) => setValue1(e.target.value)}
+            onChange={(e) =>
+              handleDiceDimensionValue(e.target.value, setValue1)
+            }
           />
           <label className="block text-lg font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mt-2">
             Dice Dimension 2 Value
@@ -307,7 +325,9 @@ function StarNet({
             type="text"
             className="text-black"
             value={value2}
-            onChange={(e) => setValue2(e.target.value)}
+            onChange={(e) =>
+              handleDiceDimensionValue(e.target.value, setValue2)
+            }
           />
         </div>
       ) : null}

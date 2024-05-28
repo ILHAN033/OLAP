@@ -25,7 +25,6 @@ const Contact = () => {
 
   return (
     <>
-      <Nav />
       <div className=" h-screen flex items-center bg-radial-gradient">
         <div className="contact-form-container">
           <h2>Contact Us</h2>
@@ -59,7 +58,9 @@ const Contact = () => {
               required
             ></textarea>
 
-            <button type="submit">Submit</button>
+            <button type="submit" className="text-white">
+              Submit
+            </button>
           </form>
         </div>
       </div>

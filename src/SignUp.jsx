@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import "./login.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Nav from "./Nav";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [registerData, setRegisterData] = useState({
     username: "",
     email: "",
@@ -21,14 +22,21 @@ const Signup = () => {
 
   async function handleRegisterSubmit(e) {
     e.preventDefault();
+    if (!registerData.email || !/\S+@\S+\.\S+/.test(registerData.email)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
     try {
       const response = await axios.post(
         "http://localhost:5000/register",
         registerData
       );
+      navigate("/login");
       console.log(response.data);
+      toast.success("Registeration Successful");
     } catch (error) {
       console.log("Register Error", error);
+      toast.error(error.response.data.error);
     }
     setRegisterData({
       username: "",
@@ -39,8 +47,7 @@ const Signup = () => {
 
   return (
     <>
-      <Nav />
-      <div className=" h-screen flex items-center bg-radial-gradient ">
+      <div className=" h-screen flex items-center bg-radial-gradient">
         <div className="form-container">
           <h2>Sign Up</h2>
           <form onSubmit={handleRegisterSubmit}>
@@ -70,13 +77,12 @@ const Signup = () => {
               onChange={handleRegister}
             />
 
-            <button> Sign Up</button>
+            <button className="text-white"> Sign Up</button>
           </form>
 
-          {/* <p onClick={handleToggle} className="toggle-btn">
-           
-          </p> */}
-          <NavLink to="/login">Already have an account?</NavLink>
+          <NavLink to="/login">
+            <p className="text-white">Already have an account?</p>
+          </NavLink>
         </div>
       </div>
     </>

@@ -183,7 +183,138 @@ app.post("/slice", async (req, res) => {
 //   }
 // });
 
-const fs = require("fs"); // Import the file system module to read JSON file
+// const fs = require("fs"); // Import the file system module to read JSON file
+
+// app.post("/dice", async (req, res) => {
+//   try {
+//     const {
+//       dimensionTable,
+//       dimensionTable2,
+//       dimensionColumn,
+//       dimension2Column,
+//       value1,
+//       value2,
+//     } = req.body;
+//     console.log(
+//       dimensionTable,
+//       dimensionColumn,
+//       dimensionTable2,
+//       dimension2Column,
+//       value1,
+//       value2
+//     );
+//     // Read data from Data.json
+//     const jsonData = JSON.parse(fs.readFileSync("Data.json", "utf8"));
+
+//     // Get the data array from JSON based on the dimension table
+//     const data = jsonData[dimensionTable];
+//     const data2 = jsonData[dimensionTable2];
+
+//     // console.log(data);
+
+//     // Find the object where the specified column matches the given value
+//     // const result = data.find((obj) => obj[dimensionColumn] === value1);
+//     const result = data.map((obj, index) => {
+//       if (value1 && value1 >= 1 && Number(value1) - 1 === index) {
+//         if (
+//           dimensionTable === "Product" ||
+//           dimensionTable === "Customer" ||
+//           dimensionTable === "Category"
+//         ) {
+//           return [obj[dimensionColumn], obj[`${dimensionTable}Name`]];
+//           // const rem_data = data.filter((item) => {
+//           //   item !== obj[dimensionColumn];
+//           //   return item;
+//           // });
+//           // console.log("remdata", rem_data);
+//           // return [obj[dimensionColumn], rem_data];
+//         } else if (dimensionTable === "Time") {
+//           return [obj[dimensionColumn], obj[`Date`]];
+//         } else {
+//           return [obj[dimensionColumn], obj["Amount"]];
+//         }
+//       }
+//     });
+
+//     const result2 = data2.map((obj, index) => {
+//       if (value2 && value2 >= 1 && Number(value2) - 1 === index) {
+//         if (
+//           dimensionTable2 === "Product" ||
+//           dimensionTable2 === "Customer" ||
+//           dimensionTable2 === "Category"
+//         ) {
+//           return [obj[dimension2Column], obj[`${dimensionTable2}Name`]];
+//         } else if (dimensionTable2 === "Time") {
+//           return [obj[dimension2Column], obj[`Date`]];
+//         } else {
+//           return [obj[dimension2Column], obj["Amount"]];
+//         }
+//       }
+//     });
+
+//     console.log(result, result2);
+
+//     const finalResult = [...result, ...result2];
+//     console.log(finalResult);
+
+//     if (finalResult) {
+//       res.json(finalResult);
+//     } else {
+//       res.status(404).json({ error: "Data not found" });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+// async function fetchDataFromDB() {
+//   try {
+//     // Connect to the database
+//     await sql.connect(config);
+
+//     // Fetch data from tables
+//     const productData = await sql.query`SELECT * FROM Product`;
+//     const categoryData = await sql.query`SELECT * FROM Category`;
+//     const customerData = await sql.query`SELECT * FROM Customer`;
+//     const timeData = await sql.query`SELECT * FROM Time`;
+//     const salesData = await sql.query`SELECT * FROM Sales`;
+
+//     // Construct JSON object with fetched data
+//     const jsonData = {
+//       Product: productData.recordset,
+//       Category: categoryData.recordset,
+//       Customer: customerData.recordset,
+//       Time: timeData.recordset,
+//       Sales: salesData.recordset,
+//     };
+
+//     return jsonData;
+//   } catch (error) {
+//     // Handle errors
+//     console.error("Error fetching data:", error);
+//     throw error;
+//   } finally {
+//     // Close the connection
+//     await sql.close();
+//   }
+// }
+
+// // Route to fetch and return data
+// app.get("/getData", async (req, res) => {
+//   try {
+//     // Fetch data from the database
+//     const data = [await fetchDataFromDB()];
+//     // console.log(data);
+//     res.json(data);
+//   } catch (error) {
+//     // Handle errors
+//     console.error("Error handling request:", error);
+//     res.status(500).json({ error: "Failed to fetch data from database" });
+//   }
+// });
+
+const fs = require("fs");
 
 app.post("/dice", async (req, res) => {
   try {
@@ -195,6 +326,7 @@ app.post("/dice", async (req, res) => {
       value1,
       value2,
     } = req.body;
+
     console.log(
       dimensionTable,
       dimensionColumn,
@@ -203,55 +335,28 @@ app.post("/dice", async (req, res) => {
       value1,
       value2
     );
-    // Read data from Data.json
+
     const jsonData = JSON.parse(fs.readFileSync("Data.json", "utf8"));
 
-    // Get the data array from JSON based on the dimension table
-    const data = jsonData[dimensionTable];
-    const data2 = jsonData[dimensionTable2];
+    const data = jsonData[dimensionTable] || [];
+    const data2 = jsonData[dimensionTable2] || [];
 
-    // console.log(data);
+    const filterData = (data, column, value) => {
+      return data.filter(
+        (obj, index) => value && value >= 1 && Number(value) - 1 === index
+      );
+    };
 
-    // Find the object where the specified column matches the given value
-    // const result = data.find((obj) => obj[dimensionColumn] === value1);
-    const result = data.map((obj, index) => {
-      if (Number(value1) - 1 === index) {
-        if (
-          dimensionTable === "Product" ||
-          dimensionTable === "Customer" ||
-          dimensionTable === "Category"
-        ) {
-          return [obj[dimensionColumn], obj[`${dimensionTable}Name`]];
-        } else if (dimensionTable === "Time") {
-          return [obj[dimensionColumn], obj[`Date`]];
-        } else {
-          return [obj[dimensionColumn], obj["Amount"]];
-        }
-      }
-    });
+    const result = filterData(data, dimensionColumn, value1);
+    const result2 = filterData(data2, dimension2Column, value2);
 
-    const result2 = data2.map((obj, index) => {
-      if (Number(value2) - 1 === index) {
-        if (
-          dimensionTable2 === "Product" ||
-          dimensionTable2 === "Customer" ||
-          dimensionTable2 === "Category"
-        ) {
-          return [obj[dimension2Column], obj[`${dimensionTable2}Name`]];
-        } else if (dimensionTable2 === "Time") {
-          return [obj[dimension2Column], obj[`Date`]];
-        } else {
-          return [obj[dimension2Column], obj["Amount"]];
-        }
-      }
-    });
+    // Combine the results
+    // const finalResult = result.concat(result2);
 
-    console.log(result, result2);
-
-    const finalResult = [...result, ...result2];
+    const finalResult = [{ ...result[0], ...result2[0] }];
     console.log(finalResult);
 
-    if (finalResult) {
+    if (finalResult.length > 0) {
       res.json(finalResult);
     } else {
       res.status(404).json({ error: "Data not found" });
@@ -262,19 +367,17 @@ app.post("/dice", async (req, res) => {
   }
 });
 
+// Function to fetch data from the database
 async function fetchDataFromDB() {
   try {
-    // Connect to the database
     await sql.connect(config);
 
-    // Fetch data from tables
     const productData = await sql.query`SELECT * FROM Product`;
     const categoryData = await sql.query`SELECT * FROM Category`;
     const customerData = await sql.query`SELECT * FROM Customer`;
     const timeData = await sql.query`SELECT * FROM Time`;
     const salesData = await sql.query`SELECT * FROM Sales`;
 
-    // Construct JSON object with fetched data
     const jsonData = {
       Product: productData.recordset,
       Category: categoryData.recordset,
@@ -285,11 +388,9 @@ async function fetchDataFromDB() {
 
     return jsonData;
   } catch (error) {
-    // Handle errors
     console.error("Error fetching data:", error);
     throw error;
   } finally {
-    // Close the connection
     await sql.close();
   }
 }
@@ -297,12 +398,9 @@ async function fetchDataFromDB() {
 // Route to fetch and return data
 app.get("/getData", async (req, res) => {
   try {
-    // Fetch data from the database
-    const data = [await fetchDataFromDB()];
-    // console.log(data);
+    const data = await fetchDataFromDB();
     res.json(data);
   } catch (error) {
-    // Handle errors
     console.error("Error handling request:", error);
     res.status(500).json({ error: "Failed to fetch data from database" });
   }

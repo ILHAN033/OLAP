@@ -1,8 +1,9 @@
 import React, { useReducer, useState } from "react";
-import Nav from "../Nav";
 import Cube from "./Cube";
 import "./model.css";
 import StarNet from "./StarNet";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const initialState = {
   status: null,
@@ -90,7 +91,6 @@ const Model = () => {
 
   return (
     <>
-      <Nav />
       <div className="app bg-radial-gradient ">
         <StarNet
           measureTable={measureTable}
