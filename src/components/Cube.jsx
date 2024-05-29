@@ -51,14 +51,14 @@
 //   const [rotateY, setRotateY] = useState(0);
 
 //   function getData() {
-//     axios.get("https://localhost:8000/api/rollup").then((res) => {
+//     axios.get("http://localhost:8000/api/rollup").then((res) => {
 //       setRolledUpData(res.data.rollup);
-//       axios.get("https://localhost:8000/drilldown").then((res) => {
+//       axios.get("http://localhost:8000/drilldown").then((res) => {
 //         setDrillDownData(res.data.drilldown);
 //       });
 //       // console.log(rolledUpData);
 //     });
-//     // fetch("httpss://jsonplaceholder.typicode.com/todos")
+//     // fetch("https://jsonplaceholder.typicode.com/todos")
 //     //   .then((res) => res.json())
 //     //   .then((data) => {});
 //     // // }
@@ -252,16 +252,16 @@
 //   const [data1, setData1] = useState([]);
 
 //   function getData() {
-//     axios.get("https://localhost:8000/api/rollup").then((res) => {
+//     axios.get("http://localhost:8000/api/rollup").then((res) => {
 //       setRolledUpData(res.data.rollup);
-//       axios.get("https://localhost:8000/drilldown").then((res) => {
+//       axios.get("http://localhost:8000/drilldown").then((res) => {
 //         setDrillDownData(res.data.drilldown);
 //       });
 
 //       // console.log(rolledUpData);
 //     });
 
-//     fetch("httpss://jsonplaceholder.typicode.com/todos")
+//     fetch("https://jsonplaceholder.typicode.com/todos")
 //       .then((res) => res.json())
 //       .then((data) => {
 //         setData1(data);
@@ -441,16 +441,16 @@
 //   const maxRotateY = 45;
 
 //   function getData() {
-//     axios.get("https://localhost:8000/api/rollup").then((res) => {
+//     axios.get("http://localhost:8000/api/rollup").then((res) => {
 //       setRolledUpData(res.data.rollup);
-//       axios.get("https://localhost:8000/drilldown").then((res) => {
+//       axios.get("http://localhost:8000/drilldown").then((res) => {
 //         setDrillDownData(res.data.drilldown);
 //       });
 
 //       // console.log(rolledUpData);
 //     });
 
-//     fetch("httpss://jsonplaceholder.typicode.com/todos")
+//     fetch("https://jsonplaceholder.typicode.com/todos")
 //       .then((res) => res.json())
 //       .then((data) => {
 //         setData1(data);
@@ -728,21 +728,21 @@ function Cube({
   // const [data1, setData1] = useState([]);
 
   // function getData() {
-  //   axios.get("https://localhost:8000/api/rollup").then((res) => {
+  //   axios.get("http://localhost:8000/api/rollup").then((res) => {
   //     setRolledUpData(res.data.rollup);
-  //     axios.get("https://localhost:8000/drilldown").then((res) => {
+  //     axios.get("http://localhost:8000/drilldown").then((res) => {
   //       setDrillDownData(res.data.drilldown);
   //     });
   //   });
   function getData() {
-    axios.get("https://20.2.249.58:8000/api/rollup").then((res) => {
+    axios.get("//20.2.249.58:8000/api/rollup").then((res) => {
       setRolledUpData(res.data.rollup);
-      axios.get("https://20.2.249.58:8000/drilldown").then((res) => {
+      axios.get("//20.2.249.58:8000/drilldown").then((res) => {
         setDrillDownData(res.data.drilldown);
       });
     });
 
-    // fetch("httpss://jsonplaceholder.typicode.com/todos")
+    // fetch("https://jsonplaceholder.typicode.com/todos")
     //   .then((res) => res.json())
     //   .then((data) => {
     //     setData1(data);

@@ -38,10 +38,7 @@ const Login = ({ isLogin, setIsLogin }) => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "https://20.2.249.58:5000/login",
-        loginData
-      );
+      const response = await axios.post("//20.2.249.58:5000/login", loginData);
       const { message, username } = response.data;
       if (response.status === 200) {
         setIsLogin(true);

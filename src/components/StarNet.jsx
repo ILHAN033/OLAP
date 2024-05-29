@@ -47,7 +47,7 @@ function StarNet({
   useEffect(() => {
     // Fetch table names when the component mounts
     axios
-      .get("https://20.2.249.58:8000/tables")
+      .get("//20.2.249.58:8000/tables")
       .then((response) => setTables(response.data))
       .catch((error) => console.error(error));
   }, []);
@@ -55,7 +55,7 @@ function StarNet({
   const fetchColumns = (tableName, setColumns) => {
     // Fetch column names for the selected table
     axios
-      .get(`https://20.2.249.58:8000/columns/${tableName}`)
+      .get(`//20.2.249.58:8000/columns/${tableName}`)
       .then((response) => setColumns(response.data))
       .catch((error) => console.error(error));
   };
@@ -80,7 +80,7 @@ function StarNet({
 
   const handleRollup = async () => {
     try {
-      const response = await axios.post("https://20.2.249.58:8000/rollup", {
+      const response = await axios.post("//20.2.249.58:8000/rollup", {
         measureTable,
         measureColumn,
         dimensionTable,
@@ -127,7 +127,7 @@ function StarNet({
 
   const handleDrilldown = async () => {
     try {
-      const response = await axios.post("https://20.2.249.58:8000/drilldown", {
+      const response = await axios.post("//20.2.249.58:8000/drilldown", {
         measureTable,
         measureColumn,
         dimensionTable,
@@ -154,7 +154,7 @@ function StarNet({
 
   const handleSlice = async () => {
     try {
-      const response = await axios.post("https://20.2.249.58:8000/slice", {
+      const response = await axios.post("//20.2.249.58:8000/slice", {
         dimensionTable,
         dimensionColumn,
         dimensionValue: sliceDimensionValue,
@@ -169,7 +169,7 @@ function StarNet({
 
   const handleDice = async () => {
     try {
-      const response = await axios.post("https://20.2.249.58:8000/Dice", {
+      const response = await axios.post("//20.2.249.58:8000/Dice", {
         dimensionTable,
         dimensionTable2,
         dimensionColumn,
