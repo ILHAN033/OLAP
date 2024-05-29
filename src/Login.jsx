@@ -39,7 +39,7 @@ const Login = ({ isLogin, setIsLogin }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://20.2.249.58:5000/login",
+        "https://20.2.249.58:5000/login",
         loginData
       );
       const { message, username } = response.data;

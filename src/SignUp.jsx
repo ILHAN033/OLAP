@@ -28,7 +28,7 @@ const Signup = () => {
     }
     try {
       const response = await axios.post(
-        "http://20.2.249.58:5000/register",
+        "https://20.2.249.58:5000/register",
         registerData
       );
       navigate("/login");
