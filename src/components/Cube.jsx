@@ -727,10 +727,17 @@ function Cube({
   // const [data, setData] = useState([]);
   // const [data1, setData1] = useState([]);
 
+  // function getData() {
+  //   axios.get("http://localhost:8000/api/rollup").then((res) => {
+  //     setRolledUpData(res.data.rollup);
+  //     axios.get("http://localhost:8000/drilldown").then((res) => {
+  //       setDrillDownData(res.data.drilldown);
+  //     });
+  //   });
   function getData() {
-    axios.get("http://localhost:8000/api/rollup").then((res) => {
+    axios.get("http://20.2.249.58:8000/api/rollup").then((res) => {
       setRolledUpData(res.data.rollup);
-      axios.get("http://localhost:8000/drilldown").then((res) => {
+      axios.get("http://20.2.249.58:8000/drilldown").then((res) => {
         setDrillDownData(res.data.drilldown);
       });
     });

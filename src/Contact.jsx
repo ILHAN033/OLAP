@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./contact.css";
-import Nav from "./Nav";
+import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Contact = () => {
+  const form = useRef();
   const [formData, setFormData] = useState({
     email: "",
     subject: "",
@@ -19,8 +22,21 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // logic here for finalizing at the end****
-    console.log("Form submitted:", formData);
+    emailjs
+      .sendForm("service_cc1qxie", "template_d0ry255", form.current, {
+        publicKey: "NRea4h6VrLBU6V8I0",
+      })
+      .then(
+        () => {
+          console.log("SUCCESS!");
+          toast.success("Message sent successfully!");
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+        }
+      );
+    setFormData({ email: "", subject: "", message: "" });
+    // console.log("Form submitted:", formData);
   };
 
   return (
@@ -28,7 +44,7 @@ const Contact = () => {
       <div className=" h-screen flex items-center bg-radial-gradient">
         <div className="contact-form-container">
           <h2>Contact Us</h2>
-          <form onSubmit={handleSubmit}>
+          <form ref={form} onSubmit={handleSubmit}>
             <label htmlFor="email">Email:</label>
             <input
               type="email"

@@ -28,7 +28,7 @@ const Signup = () => {
     }
     try {
       const response = await axios.post(
-        "http://localhost:5000/register",
+        "http://20.2.249.58:5000/register",
         registerData
       );
       navigate("/login");
@@ -56,6 +56,7 @@ const Signup = () => {
               type="email"
               id="email"
               name="email"
+              className="px-2 py-2"
               value={registerData.email}
               onChange={handleRegister}
             />
@@ -64,6 +65,7 @@ const Signup = () => {
               type="text"
               name="username"
               id="username"
+              className="px-2 py-2"
               value={registerData.username}
               onChange={handleRegister}
             />
